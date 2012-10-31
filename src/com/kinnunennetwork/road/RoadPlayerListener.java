@@ -7,7 +7,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 import org.bukkit.event.EventHandler;
@@ -90,11 +89,6 @@ public class RoadPlayerListener implements Listener
             }
         }
         
-    }
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onInteract(PlayerInteractEvent e) {
-
-    	
     }
     private Set<Player> jump;
 }

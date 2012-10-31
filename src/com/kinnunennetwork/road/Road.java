@@ -20,7 +20,6 @@ public class Road extends JavaPlugin
     {	
         this.blockListener = new RoadBlockListener(this, this.playerListener, this.blockListener, this.dataDir);
         this.playerListener = new RoadPlayerListener(this, this.playerListener, this.blockListener, this.dataDir);
-        this.playerListener = new RoadPlayerListener(this, this.playerListener, this.blockListener, this.dataDir);
         getServer().getPluginManager().registerEvents(playerListener, this);
         PluginDescriptionFile pdfFile = getDescription();
         System.out.println("[Road] v"+pdfFile.getVersion()+" Enabled");
