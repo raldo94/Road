@@ -15,7 +15,7 @@ public class RoadPlayerListener implements Listener
 {
 	Road plugin;
 	public boolean henabled, benabled, aenabled;
-	public int htop, hbottom, btop, bmiddle, bbottom, athis, atop, abottom;
+	public int htop, hbottom, btop, bmiddle, bbottom, aspeed, athis, atop, abottom;
 	public double speed, nspeed;
 	public RoadPlayerListener(Road instance) {
 	    plugin = instance;
@@ -33,6 +33,7 @@ public class RoadPlayerListener implements Listener
         bmiddle = plugin.getConfig().getInt("boosterl.middle");
         bbottom = plugin.getConfig().getInt("boosterl.bottom");
         aenabled = plugin.getConfig().getBoolean("Aerialfp.enabled");
+        aspeed = plugin.getConfig().getInt("Aerialfp.speed");
         athis = plugin.getConfig().getInt("Aerialfp.this");
         atop = plugin.getConfig().getInt("Aerialfp.top");
         abottom = plugin.getConfig().getInt("Aerialfp.bottom");
@@ -73,16 +74,16 @@ public class RoadPlayerListener implements Listener
                 byte data = b.getData();
                 Vector up;
                 if(data == 0)
-                    up = (new Vector(0.0D, 0.10000000000000001D, -3D)).normalize().multiply(100);
+                    up = (new Vector(0.0D, 0.10000000000000001D, -3D)).normalize().multiply(aspeed);
                 else
                 if(data == 1)
-                    up = (new Vector(3D, 0.10000000000000001D, 0.0D)).normalize().multiply(100);
+                    up = (new Vector(3D, 0.10000000000000001D, 0.0D)).normalize().multiply(aspeed);
                 else
                 if(data == 2)
-                    up = (new Vector(0.0D, 0.10000000000000001D, 3D)).normalize().multiply(100);
+                    up = (new Vector(0.0D, 0.10000000000000001D, 3D)).normalize().multiply(aspeed);
                 else
                 if(data == 3)
-                    up = (new Vector(-3D, 0.10000000000000001D, 0.0D)).normalize().multiply(100);
+                    up = (new Vector(-3D, 0.10000000000000001D, 0.0D)).normalize().multiply(aspeed);
                 else
                     up = new Vector(0, 0, 0);
                 player.setVelocity(up);

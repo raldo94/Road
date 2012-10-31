@@ -33,6 +33,7 @@ public class Road extends JavaPlugin
         config.addDefault("boosterl.middle", 20);
         config.addDefault("boosterl.bottom", 22);
         config.addDefault("Aerialfp.enabled", true);
+        config.addDefault("Aerialfp.speed", 100);
         config.addDefault("Aerialfp.this", 93);
         config.addDefault("Aerialfp.top", 45);
         config.addDefault("Aerialfp.bottom", 15); 
