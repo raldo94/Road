@@ -2,7 +2,6 @@ package com.kinnunennetwork.road;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
@@ -16,7 +15,7 @@ public class RoadPlayerListener implements Listener
 	Road plugin;
 	public boolean henabled, benabled, aenabled;
 	public int htop, hbottom, btop, bmiddle, bbottom, aspeed, athis, atop, abottom;
-	public double speed, nspeed;
+	public double speed, nspeed, bpwr;
 	public RoadPlayerListener(Road instance) {
 	    plugin = instance;
 	}
@@ -29,6 +28,7 @@ public class RoadPlayerListener implements Listener
         htop = plugin.getConfig().getInt("highway.top");
         hbottom = plugin.getConfig().getInt("highway.bottom");
         benabled = plugin.getConfig().getBoolean("boosterl.enabled");
+        bpwr = plugin.getConfig().getDouble("boosterl.pwr");
         btop = plugin.getConfig().getInt("boosterl.top");
         bmiddle = plugin.getConfig().getInt("boosterl.middle");
         bbottom = plugin.getConfig().getInt("boosterl.bottom");
@@ -38,7 +38,7 @@ public class RoadPlayerListener implements Listener
         atop = plugin.getConfig().getInt("Aerialfp.top");
         abottom = plugin.getConfig().getInt("Aerialfp.bottom");
     }
-	
+		
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerMove(PlayerMoveEvent event){
         Player player = event.getPlayer();
@@ -59,7 +59,7 @@ public class RoadPlayerListener implements Listener
         if(benabled == true) {
         	if(materialTop == btop && materialBottom == bmiddle && materialVeryBottom == bbottom)
             {
-                Vector up = new Vector(0, 5, 0);
+                Vector up = new Vector(0, bpwr, 0);
                 player.setVelocity(up);
                 if(jump.contains(player))
                     jump.remove(player);
@@ -73,19 +73,23 @@ public class RoadPlayerListener implements Listener
                 Block b = player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
                 byte data = b.getData();
                 Vector up;
-                if(data == 0)
-                    up = (new Vector(0.0D, 0.10000000000000001D, -3D)).normalize().multiply(aspeed);
-                else
-                if(data == 1)
-                    up = (new Vector(3D, 0.10000000000000001D, 0.0D)).normalize().multiply(aspeed);
-                else
-                if(data == 2)
-                    up = (new Vector(0.0D, 0.10000000000000001D, 3D)).normalize().multiply(aspeed);
-                else
-                if(data == 3)
-                    up = (new Vector(-3D, 0.10000000000000001D, 0.0D)).normalize().multiply(aspeed);
-                else
-                    up = new Vector(0, 0, 0);
+                switch (data) {
+                case 0:
+                	up = (new Vector(0.0, 1.80000000000000001, -10)).normalize().multiply(aspeed);
+                	break;
+                case 1:
+                	up = (new Vector(10, 1.80000000000000001, 0.0)).normalize().multiply(aspeed);
+                	break;
+                case 2:
+                	up = (new Vector(0.0, 1.80000000000000001, 10)).normalize().multiply(aspeed);
+                	break;
+                case 3:
+                	up = (new Vector(-10, 1.80000000000000001, 0.0)).normalize().multiply(aspeed);
+                	break;
+                default:
+                	up = new Vector(0, 0, 0);
+                	break;
+                }             
                 player.setVelocity(up);
             }
         }

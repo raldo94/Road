@@ -1,7 +1,6 @@
 package com.kinnunennetwork.road;
 
 import java.util.HashMap;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -29,11 +28,12 @@ public class Road extends JavaPlugin
         config.addDefault("highway.top", 20);
         config.addDefault("highway.bottom", 41);
         config.addDefault("boosterl.enabled", true);
+        config.addDefault("boosterl.pwr", 5);
         config.addDefault("boosterl.top", 57);
         config.addDefault("boosterl.middle", 20);
         config.addDefault("boosterl.bottom", 22);
         config.addDefault("Aerialfp.enabled", true);
-        config.addDefault("Aerialfp.speed", 100);
+        config.addDefault("Aerialfp.speed", 2);
         config.addDefault("Aerialfp.this", 93);
         config.addDefault("Aerialfp.top", 45);
         config.addDefault("Aerialfp.bottom", 15); 
