@@ -1,15 +1,12 @@
 package com.kinnunennetwork.road;
 
-import java.util.HashMap;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Road extends JavaPlugin
 {	
     private String dataDir;
-    public RoadBlockListener blockListener;
     public RoadPlayerListener playerListener;
 	
     public Road()
@@ -17,8 +14,7 @@ public class Road extends JavaPlugin
     }
     public void onEnable()
     {	
-        this.blockListener = new RoadBlockListener(this, this.playerListener, this.blockListener, this.dataDir);
-        this.playerListener = new RoadPlayerListener(this, this.playerListener, this.blockListener, this.dataDir);
+        this.playerListener = new RoadPlayerListener(this, this.playerListener, this.dataDir);
         getServer().getPluginManager().registerEvents(playerListener, this);
         PluginDescriptionFile pdfFile = getDescription();
         System.out.println("[Road] v"+pdfFile.getVersion()+" Enabled");
@@ -46,18 +42,4 @@ public class Road extends JavaPlugin
         System.out.println("[Road] Road Disabled!");
     }
     
-    public boolean isDebugging(Player player)
-    {
-        if(debugees.containsKey(player))
-            return ((Boolean)debugees.get(player)).booleanValue();
-        else
-            return false;
-    }
-    
-    public void setDebugging(Player player, boolean value)
-    {
-        debugees.put(player, Boolean.valueOf(value));
-    }
-    
-    private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
 }

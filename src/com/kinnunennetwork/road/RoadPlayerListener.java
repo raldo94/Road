@@ -1,7 +1,6 @@
 package com.kinnunennetwork.road;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
@@ -20,9 +19,8 @@ public class RoadPlayerListener implements Listener
 	    plugin = instance;
 	}
 	
-	public RoadPlayerListener(Road plugin, RoadPlayerListener playerListener, RoadBlockListener blockListener, String dir)
+	public RoadPlayerListener(Road plugin, RoadPlayerListener playerListener, String dir)
 	{
-        jump = new HashSet<Player>();
         speed = plugin.getConfig().getDouble("highway.speed");
         henabled = plugin.getConfig().getBoolean("highway.enabled");
         htop = plugin.getConfig().getInt("highway.top");
@@ -42,13 +40,17 @@ public class RoadPlayerListener implements Listener
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerMove(PlayerMoveEvent event){
         Player player = event.getPlayer();
-        int materialThis = player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()).getTypeId();
-        int materialTop = player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY() - 2, player.getLocation().getBlockZ()).getTypeId();
-        int materialBottom = player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY() - 3, player.getLocation().getBlockZ()).getTypeId();
-        int materialVeryBottom = player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY() - 4, player.getLocation().getBlockZ()).getTypeId();
         
-    	
-        if(henabled == true) {
+        Location bpos = player.getLocation();
+        int materialThis = player.getWorld().getBlockAt(bpos).getTypeId();
+        bpos.setY(bpos.getY()-2);
+        int materialTop = player.getWorld().getBlockAt(bpos).getTypeId();
+        bpos.setY(bpos.getY()-1);
+        int materialBottom = player.getWorld().getBlockAt(bpos).getTypeId();
+        bpos.setY(bpos.getY()-1);
+        int materialVeryBottom = player.getWorld().getBlockAt(bpos).getTypeId();
+        
+        if(henabled == true && player.hasPermission("road.highway")) {
         	if(materialTop == htop && materialBottom == hbottom && player.isSneaking())
         	{	
         		nspeed = (speed * 0.44);
@@ -56,17 +58,14 @@ public class RoadPlayerListener implements Listener
         		player.setVelocity(dir2);
         	}
         }
-        if(benabled == true) {
+        if(benabled == true && player.hasPermission("road.boosterl")) {
         	if(materialTop == btop && materialBottom == bmiddle && materialVeryBottom == bbottom)
             {
                 Vector up = new Vector(0, bpwr, 0);
                 player.setVelocity(up);
-                if(jump.contains(player))
-                    jump.remove(player);
-                jump.add(player);
             }	
         }
-        if (aenabled == true) {
+        if (aenabled == true && player.hasPermission("road.aerialfp")) {
 
         	if(materialTop == atop && materialBottom == abottom && materialThis == athis)
             {
@@ -95,5 +94,4 @@ public class RoadPlayerListener implements Listener
         }
         
     }
-    private Set<Player> jump;
 }
